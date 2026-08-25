@@ -1,0 +1,138 @@
+{
+  "id": "krea2_t2i",
+  "name": "Krea2文生图",
+  "description": "使用Krea2模型生成高质量图像，支持风格参考和LoRA",
+  "category": "image",
+  "nodes": {
+    "1": {
+      "class_type": "CheckpointLoaderSimple",
+      "inputs": {
+        "ckpt_name": "krea2_v1.safetensors"
+      },
+      "_meta": { "title": "加载Krea2模型" }
+    },
+    "2": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "a beautiful landscape, high quality, detailed",
+        "clip": ["1", 1]
+      },
+      "_meta": { "title": "正向提示词" }
+    },
+    "3": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "low quality, blurry, distorted",
+        "clip": ["1", 1]
+      },
+      "_meta": { "title": "负向提示词" }
+    },
+    "4": {
+      "class_type": "EmptyLatentImage",
+      "inputs": {
+        "width": 1024,
+        "height": 1024,
+        "batch_size": 1
+      },
+      "_meta": { "title": "创建空白潜空间" }
+    },
+    "5": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": ["1", 0],
+        "positive": ["2", 0],
+        "negative": ["3", 0],
+        "latent_image": ["4", 0],
+        "seed": 12345,
+        "steps": 20,
+        "cfg": 7.0,
+        "sampler_name": "euler",
+        "scheduler": "normal",
+        "denoise": 1.0
+      },
+      "_meta": { "title": "采样器" }
+    },
+    "6": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": ["5", 0],
+        "vae": ["1", 2]
+      },
+      "_meta": { "title": "VAE解码" }
+    },
+    "7": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": ["6", 0],
+        "filename_prefix": "krea2"
+      },
+      "_meta": { "title": "保存图像" }
+    }
+  },
+  "parameters": [
+    {
+      "id": "positive_prompt",
+      "nodeId": "2",
+      "field": "text",
+      "type": "text",
+      "label": "正向提示词",
+      "default": "a beautiful landscape, high quality, detailed"
+    },
+    {
+      "id": "negative_prompt",
+      "nodeId": "3",
+      "field": "text",
+      "type": "text",
+      "label": "负向提示词",
+      "default": "low quality, blurry, distorted"
+    },
+    {
+      "id": "width",
+      "nodeId": "4",
+      "field": "width",
+      "type": "number",
+      "label": "宽度",
+      "default": 1024
+    },
+    {
+      "id": "height",
+      "nodeId": "4",
+      "field": "height",
+      "type": "number",
+      "label": "高度",
+      "default": 1024
+    },
+    {
+      "id": "steps",
+      "nodeId": "5",
+      "field": "steps",
+      "type": "number",
+      "label": "采样步数",
+      "default": 20
+    },
+    {
+      "id": "cfg",
+      "nodeId": "5",
+      "field": "cfg",
+      "type": "number",
+      "label": "CFG",
+      "default": 7.0
+    },
+    {
+      "id": "seed",
+      "nodeId": "5",
+      "field": "seed",
+      "type": "number",
+      "label": "种子",
+      "default": 12345
+    }
+  ],
+  "outputs": [
+    {
+      "nodeId": "7",
+      "field": "images",
+      "type": "image",
+      "label": "生成图像"
+    }
+  ]
+}

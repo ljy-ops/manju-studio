@@ -1,0 +1,119 @@
+{
+  "id": "qwen_edit",
+  "name": "Qwen图片编辑",
+  "description": "使用Qwen Edit 2511进行图片编辑，支持局部重绘和风格转换",
+  "category": "edit",
+  "nodes": {
+    "1": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "input.png"
+      },
+      "_meta": { "title": "加载源图片" }
+    },
+    "2": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "edit the image, make it more vibrant",
+        "clip": ["3", 1]
+      },
+      "_meta": { "title": "编辑指令" }
+    },
+    "3": {
+      "class_type": "CheckpointLoaderSimple",
+      "inputs": {
+        "ckpt_name": "qwen_edit_2511.safetensors"
+      },
+      "_meta": { "title": "加载Qwen Edit模型" }
+    },
+    "4": {
+      "class_type": "VAEEncode",
+      "inputs": {
+        "pixels": ["1", 0],
+        "vae": ["3", 2]
+      },
+      "_meta": { "title": "VAE编码" }
+    },
+    "5": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": ["3", 0],
+        "positive": ["2", 0],
+        "negative": ["6", 0],
+        "latent_image": ["4", 0],
+        "seed": 12345,
+        "steps": 20,
+        "cfg": 7.0,
+        "sampler_name": "euler",
+        "scheduler": "normal",
+        "denoise": 0.75
+      },
+      "_meta": { "title": "采样器" }
+    },
+    "6": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "low quality, blurry",
+        "clip": ["3", 1]
+      },
+      "_meta": { "title": "负向提示词" }
+    },
+    "7": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": ["5", 0],
+        "vae": ["3", 2]
+      },
+      "_meta": { "title": "VAE解码" }
+    },
+    "8": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": ["7", 0],
+        "filename_prefix": "qwen_edit"
+      },
+      "_meta": { "title": "保存编辑后图像" }
+    }
+  },
+  "parameters": [
+    {
+      "id": "source_image",
+      "nodeId": "1",
+      "field": "image",
+      "type": "image",
+      "label": "源图片"
+    },
+    {
+      "id": "edit_instruction",
+      "nodeId": "2",
+      "field": "text",
+      "type": "text",
+      "label": "编辑指令",
+      "default": "edit the image, make it more vibrant"
+    },
+    {
+      "id": "denoise",
+      "nodeId": "5",
+      "field": "denoise",
+      "type": "number",
+      "label": "重绘强度",
+      "default": 0.75
+    },
+    {
+      "id": "steps",
+      "nodeId": "5",
+      "field": "steps",
+      "type": "number",
+      "label": "采样步数",
+      "default": 20
+    }
+  ],
+  "outputs": [
+    {
+      "nodeId": "8",
+      "field": "images",
+      "type": "image",
+      "label": "编辑后图片"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "id": "484f1e67-e2dd-4f64-8f0f-ea92db438d0b",
+  "title": "Animal/baby Dancing",
+  "nodes": [
+    {
+      "id": "57d32997-1df1-4c39-a7b0-498cd443da0e",
+      "type": "Image",
+      "x": 513.748605513562,
+      "y": 1290.764984278848,
+      "prompt": "generate a cute cat standing like a human on a dinner table with dishes.",
+      "status": "success",
+      "model": "Banana Pro",
+      "aspectRatio": "9:16",
+      "resolution": "4K",
+      "parentIds": [],
+      "imageModel": "gemini-pro",
+      "generationStartTime": 1767728107617,
+      "resultUrl": "/library/images/img_1767728145025_ky93dn78o.png?t=1767728145064",
+      "resultAspectRatio": "3072/5504"
+    },
+    {
+      "id": "695492f1-3133-43c4-ad5a-dbd6b563e740",
+      "type": "Image",
+      "x": 1133.3337981909476,
+      "y": 1294.8145607015765,
+      "prompt": "please move the dishes a little away from the cat on the table, make more room for it to dance.",
+      "status": "success",
+      "model": "Banana Pro",
+      "aspectRatio": "9:16",
+      "resolution": "4K",
+      "parentIds": [
+        "57d32997-1df1-4c39-a7b0-498cd443da0e"
+      ],
+      "imageModel": "gemini-pro",
+      "generationStartTime": 1767728204382,
+      "resultUrl": "/library/images/img_1767728253702_mygdas7kr.png?t=1767728253724",
+      "resultAspectRatio": "3072/5504"
+    },
+    {
+      "id": "0f9cf6a1-7593-4c88-964f-8724486012b2",
+      "type": "Video",
+      "x": 1912.2023301623015,
+      "y": 891.2067772363521,
+      "prompt": "",
+      "status": "success",
+      "model": "Banana Pro",
+      "aspectRatio": "9:16",
+      "resolution": "Auto",
+      "parentIds": [
+        "1767728025300",
+        "695492f1-3133-43c4-ad5a-dbd6b563e740",
+        "1767728477077"
+      ],
+      "videoModel": "kling-v2-6",
+      "resultUrl": "/library/videos/vid_1767728911030_klukaqoqo.mp4?t=1767728911101",
+      "lastFrame": "/library/images/wf_1767729096142_zq6q9w.png",
+      "resultAspectRatio": "1072/1936"
+    },
+    {
+      "id": "1767728477077",
+      "type": "Video",
+      "x": 1123.8847865379157,
+      "y": 574.6096627400914,
+      "prompt": "cute baby funny dance #cute #funnydance #babydance #baby #dance ",
+      "status": "success",
+      "resultUrl": "/library/videos/tiktok_1767728468417_2d9c3dd5.mp4",
+      "model": "tiktok-import",
+      "videoModel": "veo-3.1",
+      "aspectRatio": "9:16",
+      "resolution": "Auto",
+      "videoDuration": 14,
+      "resultAspectRatio": "720/1096",
+      "lastFrame": "/library/images/wf_1767729096150_by6kxw.png"
+    }
+  ],
+  "groups": [],
+  "viewport": {
+    "x": 30.613912026665048,
+    "y": -381.57955451916064,
+    "zoom": 0.8187307530779817
+  },
+  "updatedAt": "2026-01-06T19:56:46.848Z",
+  "createdAt": "2026-01-06T19:56:46.848Z"
+}

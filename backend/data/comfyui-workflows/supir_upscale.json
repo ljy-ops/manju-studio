@@ -1,0 +1,119 @@
+{
+  "id": "supir_upscale",
+  "name": "SUPIR画质增强",
+  "description": "使用SUPIR进行4K-8K画质增强和超分辨率",
+  "category": "edit",
+  "nodes": {
+    "1": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "input.png"
+      },
+      "_meta": { "title": "加载源图片" }
+    },
+    "2": {
+      "class_type": "SUPIR_model_loader",
+      "inputs": {
+        "supir_model": "SUPIR-v0Q.pth",
+        "fp8_unet": false
+      },
+      "_meta": { "title": "加载SUPIR模型" }
+    },
+    "3": {
+      "class_type": "SUPIR_first_stage",
+      "inputs": {
+        "SUPIR_VAE": ["2", 1],
+        "image": ["1", 0],
+        "use_tiled_vae": true,
+        "tile_size": 512,
+        "tile_stride": 256
+      },
+      "_meta": { "title": "SUPIR第一阶段" }
+    },
+    "4": {
+      "class_type": "SUPIR_conditioner",
+      "inputs": {
+        "SUPIR_MODEL": ["2", 0],
+        "SUPIR_VAE": ["2", 1],
+        "latents": ["3", 0],
+        "captions": ["3", 1]
+      },
+      "_meta": { "title": "SUPIR条件处理" }
+    },
+    "5": {
+      "class_type": "SUPIR_sample",
+      "inputs": {
+        "SUPIR_MODEL": ["2", 0],
+        "latents": ["4", 0],
+        "positive": ["4", 1],
+        "negative": ["4", 2],
+        "seed": 12345,
+        "steps": 20,
+        "cfg_scale": 7.0,
+        "sampler_name": "euler",
+        "scheduler": "normal"
+      },
+      "_meta": { "title": "SUPIR采样" }
+    },
+    "6": {
+      "class_type": "SUPIR_decode",
+      "inputs": {
+        "SUPIR_VAE": ["2", 1],
+        "samples": ["5", 0],
+        "use_tiled_vae": true,
+        "tile_size": 512,
+        "tile_stride": 256
+      },
+      "_meta": { "title": "SUPIR解码" }
+    },
+    "7": {
+      "class_type": "SaveImage",
+      "inputs": {
+        "images": ["6", 0],
+        "filename_prefix": "supir_upscaled"
+      },
+      "_meta": { "title": "保存增强后图像" }
+    }
+  },
+  "parameters": [
+    {
+      "id": "source_image",
+      "nodeId": "1",
+      "field": "image",
+      "type": "image",
+      "label": "源图片"
+    },
+    {
+      "id": "steps",
+      "nodeId": "5",
+      "field": "steps",
+      "type": "number",
+      "label": "采样步数",
+      "default": 20
+    },
+    {
+      "id": "cfg_scale",
+      "nodeId": "5",
+      "field": "cfg_scale",
+      "type": "number",
+      "label": "CFG Scale",
+      "default": 7.0
+    },
+    {
+      "id": "seed",
+      "nodeId": "5",
+      "field": "seed",
+      "type": "number",
+      "label": "种子",
+      "default": 12345
+    }
+  ],
+  "outputs": [
+    {
+      "nodeId": "7",
+      "field": "images",
+      "type": "image",
+      "label": "增强后图片"
+    }
+  ]
+}

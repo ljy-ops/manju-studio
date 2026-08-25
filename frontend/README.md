@@ -1,0 +1,511 @@
+<div align="center">
+  <img src="public/TwitCanva-logo.png" alt="TwitCanva Logo" width="120" />
+  <h1>TwitCanva</h1>
+</div>
+
+A modern, AI-powered canvas application for generating and manipulating images and videos using OpenAI GPT Image, Google Gemini, Kling AI, Hailuo AI (MiniMax), and Fal.ai. Built with React, TypeScript, and Vite.
+
+![TwitCanva](https://img.shields.io/badge/React-18.3.1-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-blue)
+![Vite](https://img.shields.io/badge/Vite-6.4.1-purple)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=SankaiAI/TwitCanva-Video-Workflow&type=date&legend=top-left)](https://www.star-history.com/?repos=SankaiAI%2FTwitCanva-Video-Workflow&type=date&legend=top-left)
+
+
+## ✨ Features
+
+- **🎨 Visual Canvas Interface** - Drag-and-drop node-based workflow
+- **🤖 Multi-Model AI Generation** - GPT Image 1.5, Gemini Pro, Kling V1-V2.5 for images
+- **🎬 Multi-Model Video Generation** - Veo 3.1, Kling V1-V2.6, Hailuo 2.3/O2 for videos
+- **🎥 Camera Angle Control** - Transform any image by adjusting camera rotation and tilt angles (Qwen-Image-Edit)
+- **📋 Storyboard** - Create video storyboards with consistent characters and layouts
+- **💃 Motion Control** - Transfer motion from reference videos to character images (Kling V2.6 via Fal.ai)
+- **📥 TikTok Import** - Download TikTok videos without watermark for use as motion references
+- **📤 Post to X** - Share generated images/videos directly to Twitter/X with one click
+- **📤 Post to TikTok** - Share generated videos directly to TikTok with one click
+- **🖼️ Image-to-Image** - Use reference images for generation
+- **📽️ Frame-to-Frame Video** - Animate between start and end frames
+- **🔗 Smart Node Connections** - Type-aware validation (IMAGE→VIDEO, TEXT→IMAGE, etc.)
+- **💬 AI Chat Assistant** - Built-in chat with LangGraph agent
+- **📚 Asset Library** - Save and reuse generated assets
+- **💾 Workflow Management** - Save, load, and share workflows
+- **⚡ Real-time Updates** - Hot module replacement for instant feedback
+- **🎯 Aspect Ratio Control** - Multiple preset ratios for images
+- **📹 Resolution Options** - 720p and 1080p for videos
+- **🔒 Secure API** - Backend proxy keeps API keys safe
+- **🔄 Auto-Model Selection** - Filters models based on input compatibility
+- **🖥️ Local Open-Source Models** - Run Stable Diffusion, ControlNet, Qwen on your GPU
+- **⚖️ Commercial Friendly** - Dual-licensed or permissive terms for commercial growth
+
+
+## 🎥 Showcase
+
+### App Overview
+https://github.com/user-attachments/assets/7a64d4df-7ade-4bfa-b2cd-d615d267dd40
+
+### Motion Control Example (Kling V2.6)
+Transfer motion from a reference video to a character image - make anyone dance!
+
+https://github.com/user-attachments/assets/1ee6cbf3-00a5-496e-852c-3304c6ebc6c9
+
+### Output Example
+Download all the generated videos and use video editting tool like CapCut to create a final video. Check result below.
+
+https://github.com/user-attachments/assets/43cf8bb8-bf85-45f9-96da-657033126d94
+
+https://github.com/user-attachments/assets/e6f89da5-d3a6-4889-a38b-672cf37bbd79
+
+### Camera Angle Control
+Transform any image by adjusting camera rotation and tilt angles.
+
+https://github.com/user-attachments/assets/f0d678df-31ac-4431-bd7c-eea3950bfb1d
+
+### Storyboard
+Create video storyboards with consistent characters and layouts.
+
+https://github.com/user-attachments/assets/3c36de54-d37e-4875-8403-5b6e4a6216e0
+
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- Google Gemini API key (get one at [Google AI Studio](https://aistudio.google.com/app/apikey))
+- Kling AI API keys (get them at [Kling AI Developer](https://app.klingai.com/global/dev/api-key))
+  - Requires purchasing API packages at [Kling AI Pricing](https://klingai.com/global/dev/pricing)
+- Hailuo AI API key (get one at [MiniMax Platform](https://platform.minimax.io/user-center/basic-information/interface-key))
+- OpenAI API key (get one at [OpenAI Platform](https://platform.openai.com/api-keys))
+  - Requires [organization verification](https://platform.openai.com/settings/organization/general) to use GPT Image models
+- Fal.ai API key (get one at [Fal.ai Dashboard](https://fal.ai/dashboard/keys)) - Required for Kling V2.6 Motion Control
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/SankaiAI/TwitCanva.git
+   cd TwitCanva
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   # Get from https://aistudio.google.com/app/apikey
+   GEMINI_API_KEY=your_gemini_api_key_here
+   
+   # Get from https://app.klingai.com/global/dev/api-key
+   KLING_ACCESS_KEY=your_kling_access_key_here
+   KLING_SECRET_KEY=your_kling_secret_key_here
+   
+   # Get from https://platform.minimax.io/user-center/basic-information/interface-key
+   HAILUO_API_KEY=your_hailuo_api_key_here
+   
+   # Get from https://platform.openai.com/api-keys
+   OPENAI_API_KEY=your_openai_api_key_here
+   
+   # Get from https://fal.ai/dashboard/keys (for Kling V2.6 Motion Control)
+   FAL_API_KEY=your_fal_api_key_here
+   
+   # Optional: X (Twitter) Post Feature - Get from https://developer.twitter.com/en/portal
+   # See docs/post-to-x.md for detailed setup instructions
+   TWITTER_CLIENT_ID=your_twitter_client_id
+   TWITTER_CLIENT_SECRET=your_twitter_client_secret
+   TWITTER_API_KEY=your_twitter_api_key
+   TWITTER_API_SECRET=your_twitter_api_secret
+   TWITTER_ACCESS_TOKEN=your_twitter_access_token
+   TWITTER_ACCESS_TOKEN_SECRET=your_twitter_access_token_secret
+   TWITTER_CALLBACK_URL=http://127.0.0.1:3001/api/twitter/callback
+   
+   # Optional: TikTok Post Feature - Get from https://developers.tiktok.com/
+   # See docs/tiktok-integration.md for detailed setup instructions
+   TIKTOK_CLIENT_KEY=your_tiktok_client_key
+   TIKTOK_CLIENT_SECRET=your_tiktok_client_secret
+   TIKTOK_CALLBACK_URL=https://your-ngrok-url.ngrok-free.app/api/tiktok-post/callback
+   ```
+   
+   > ⚠️ **Security**: API keys are stored server-side only and never exposed to the client.
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   
+   This starts both:
+   - **Frontend dev server**: `http://localhost:5173`
+   - **Backend API server**: `http://localhost:3001`
+
+### Alternative: Docker Installation
+
+If you prefer using Docker to run the application in a containerized environment (recommended for deployment):
+
+1. **Clone the repository and set up .env** (same as steps 1-3 above)
+
+2. **Run with Docker Compose**
+   ```bash
+   docker compose up -d --build
+   ```
+
+   - The app will run on `http://localhost:3001`
+   - Data persists in the local `library/` folder
+   - To stop: `docker compose down`
+
+### Optional: Local Open-Source Models Setup
+
+TwitCanva supports running open-source AI models (like Stable Diffusion, Qwen Camera Control, ControlNet) locally on your GPU. This is **optional** - the cloud-based AI models work without this setup.
+
+**Requirements:**
+- NVIDIA GPU with 8GB+ VRAM (12GB+ recommended for larger models)
+- Python 3.10+
+- CUDA-compatible drivers
+
+**Setup:**
+```bash
+# Option 1: Use npm script (recommended)
+npm run setup:local-models
+
+# Option 2: Run setup script directly
+# Windows:
+setup-local-models.bat
+
+# Linux/macOS:
+chmod +x setup-local-models.sh
+./setup-local-models.sh
+```
+
+This will:
+1. Create a Python virtual environment (`venv/`)
+2. Install PyTorch with CUDA support (~2.8GB download)
+3. Create the `models/` directory structure
+4. Test GPU detection
+
+**Adding Models:**
+
+Download models from [HuggingFace](https://huggingface.co/models), [Civitai](https://civitai.com), or similar sites (`.safetensors`, `.ckpt`, or `.pt` files) and place them in the appropriate folder:
+
+| Folder | Model Types | Examples |
+|--------|-------------|----------|
+| `models/checkpoints/` | Main image generation models | Stable Diffusion 1.5, SDXL, DreamShaper, Juggernaut XL, Flux |
+| `models/loras/` | LoRA adapters for styles/characters | Art styles, character LoRAs, detail enhancers |
+| `models/controlnet/` | Guided generation models | OpenPose, Canny, Depth, Tile |
+| `models/video/` | Video generation models | AnimateDiff, Stable Video Diffusion (SVD) |
+
+**Using Local Models:**
+1. Right-click on canvas → Add Nodes
+2. Select "Local Image Model" or "Local Video Model"
+3. Choose your downloaded model from the dropdown
+4. Enter a prompt and generate!
+
+> 📖 For detailed documentation, see [docs/local-model-support.md](docs/local-model-support.md)
+
+### Optional: Camera Angle Control Setup
+
+Transform your generated images with AI-powered camera angle manipulation using the Qwen Image Edit model.
+
+#### Option 1: Cloud Deployment (Recommended)
+For users without high-end GPUs, we provide a Modal-based cloud deployment.
+
+1. **Install Modal**:
+   ```bash
+   pip install modal
+   modal setup
+   ```
+
+2. **Deploy the App**:
+   ```bash
+   modal deploy modal/camera_angle.py
+   ```
+
+3. **Configure Environment**:
+   Copy the generated `generate` endpoint URL and add it to your `.env` file:
+   ```env
+   VITE_MODAL_CAMERA_ENDPOINT=https://your-workspace--camera-angle-control-cameraangle-generate.modal.run
+   ```
+
+4. **Managing Costs**:
+   - **Auto scale-down**: Containers automatically shut down after 5 minutes of inactivity (no charges when idle).
+   - **Stop the app completely**: Run `modal app stop camera-angle-control` to disable the endpoint entirely.
+   - **Restart after stopping**: Run `modal deploy modal/camera_angle.py` again to re-enable.
+   
+   > **Tip**: Stop the app when not actively using the feature to avoid any accidental charges.
+
+#### Option 2: Local Deployment (Advanced)
+This feature requires a **24GB VRAM GPU** (RTX 3090/4090).
+
+**Download Models (~35GB):**
+```bash
+# Activate venv
+.\venv\Scripts\activate    # Windows
+source venv/bin/activate   # Linux/macOS
+
+# Download fast transformer (~20GB)
+huggingface-cli download linoyts/Qwen-Image-Edit-Rapid-AIO \
+    --local-dir models/camera-control/qwen-rapid-aio \
+    --include "transformer/*"
+
+# Download camera angle LoRA (~236MB)
+huggingface-cli download dx8152/Qwen-Edit-2509-Multiple-angles \
+    镜头转换.safetensors \
+    --local-dir models/camera-control/loras
+```
+
+**Configure HuggingFace Cache (Recommended):**
+
+By default, HuggingFace caches models to your C: drive. Move the cache to prevent filling up your system drive:
+
+```powershell
+# Windows - Set cache to D: drive
+[System.Environment]::SetEnvironmentVariable("HF_HOME", "D:\HuggingFace_Cache", "User")
+# Restart terminal after running
+```
+
+```bash
+# Linux/macOS - Add to ~/.bashrc or ~/.zshrc
+export HF_HOME="/path/to/your/cache"
+source ~/.bashrc
+```
+
+**Start Camera Angle Server:**
+```bash
+.\start-camera-server.bat    # Windows
+./start-camera-server.sh     # Linux/macOS
+# Server runs on http://localhost:8100
+```
+
+> 📖 For detailed documentation, see [docs/camera-angle-control.md](docs/camera-angle-control.md)
+
+
+## 💾 Asset Storage
+
+All generated assets are automatically saved to local folders. **These folders are created automatically** when the server starts if they don't exist.
+
+### Storage Locations
+
+| Asset Type | Folder | File Format | Notes |
+|------------|--------|-------------|-------|
+| **Images** | `library/images/` | `.png` + `.json` | Auto-saved on generation |
+| **Videos** | `library/videos/` | `.mp4` + `.json` | Auto-saved on generation |
+| **Workflows** | `library/workflows/` | `.json` | Manual save via UI |
+| **Chat Sessions** | `library/chats/` | `.json` | Auto-saved per message |
+| **Assets** | `library/assets/` | Various | User uploaded files |
+
+### How It Works
+
+1. **On server startup**: Directories are created with `fs.mkdirSync(dir, { recursive: true })`
+2. **On generation**: Files are saved to disk and served via `/library/*` URLs
+3. **Metadata**: Each asset has a `.json` file with prompt, timestamp, and other info
+4. **Persistence**: Assets persist across server restarts
+
+
+> **Note**: The `library/` folder is in `.gitignore` and won't be committed to the repository.
+
+## 🎮 Usage
+
+### Creating Nodes
+
+1. **Double-click** on the canvas to open the context menu
+2. Select **"Add Nodes"** → Choose node type (Image/Video)
+3. Enter a prompt describing what you want to generate
+4. Click the **✨ Generate** button
+
+### Connecting Nodes
+
+1. **Hover** over a node to reveal connector buttons (+ icons)
+2. **Click and drag** from a connector to create a connection
+3. **Release** on another node to connect and chain generation
+
+### AI Chat
+
+1. Click the **Chat** button in the top bar
+2. Type your message or attach images from the canvas
+3. The AI assistant can help with prompts, ideas, and more
+
+### Saving Workflows
+
+1. Click the **Workflows** button in the top bar
+2. Enter a workflow name and click **Save**
+3. Load saved workflows anytime from the same panel
+
+### Canvas Navigation
+
+- **Pan**: Click and drag on empty canvas space
+- **Zoom**: `Ctrl/Cmd + Mouse Wheel` or use the zoom slider
+- **Select**: Click on a node to select it
+- **Multi-select**: `Shift + Click` or drag a selection box
+- **Context Menu**: Right-click for additional options
+
+### Tools
+
+Access import tools via the **Wrench** icon in the left toolbar.
+
+#### TikTok Video Import
+
+Download TikTok videos without watermark to use as **motion references** for the Motion Control feature:
+
+1. Click the **Wrench (Tools)** icon in the left toolbar
+2. Select **Import TikTok** from the dropdown menu
+3. Paste a TikTok video URL (tiktok.com, vm.tiktok.com, or vt.tiktok.com)
+4. Click **Import Video** to download
+5. Preview the video and click **Add to Canvas**
+
+> **Tip**: The imported video will appear in your Video History and can be used as a motion reference when generating videos with Kling V2.6 Motion Control. This allows you to transfer dance moves, gestures, or any motion from TikTok videos to your AI-generated characters!
+
+> **Note**: First and last frames are automatically trimmed to remove TikTok watermarks (requires ffmpeg installed on your system).
+
+#### Post to X (Twitter)
+
+Share your generated images and videos directly to Twitter/X:
+
+1. Generate an image or video using a node
+2. Hover over the media and click the **X icon** button
+3. Sign in with your X account (first time only)
+4. Add an optional caption
+5. Click **Post** to share!
+
+> **Rate Limits (Free Tier)**: 17 posts/day, 85 media uploads/day. See [Post to X Documentation](docs/post-to-x.md) for setup instructions.
+
+#### Post to TikTok
+
+Share your generated videos directly to TikTok:
+
+1. Generate a video using a node
+2. Hover over the video and click the **TikTok icon** button (🎵)
+3. Sign in with your TikTok account (first time only)
+4. Add a caption with hashtags
+5. Select privacy level ("Only Me" for testing)
+6. Click **Post to TikTok**
+
+> **Note**: Unaudited apps can only post to private accounts. See [TikTok Integration Documentation](docs/tiktok-integration.md) for full setup.
+
+## 🔧 Available Scripts
+
+```bash
+npm run dev        # Start frontend + backend together
+npm run server     # Start backend server only (port 3001)
+npm run build      # Build for production
+npm run preview    # Preview production build
+```
+
+## 🔒 Security
+
+Your API key is **never exposed** to the browser:
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────┐
+│  Browser/Client │────▶│  Backend :3001  │────▶│  Gemini API │
+│  (No API key)   │     │  (.env file)    │     │             │
+└─────────────────┘     └─────────────────┘     └─────────────┘
+```
+
+- ✅ API key stored in `.env` (server-side only)
+- ✅ `.env` file is in `.gitignore`
+- ✅ Backend proxies all API calls
+- ✅ No sensitive data in client code
+
+## 📦 Tech Stack
+
+### Frontend
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **Lucide React** - Icons
+
+### Backend
+- **Express** - Web server
+- **LangGraph.js** - Chat agent framework
+- **@google/genai** - Gemini API client
+- **dotenv** - Environment variables
+
+### AI Models
+
+**Image Generation:**
+| Model | Provider | Image-to-Image | Multi-Image |
+|-------|----------|:-------------:|:-----------:|
+| GPT Image 1.5 | OpenAI | ✅ | ✅ |
+| Gemini Pro | Google | ✅ | ✅ |
+| Kling V1 | Kling AI | ✅ | ❌ |
+| Kling V1.5 | Kling AI | ✅ | ❌ |
+| Kling V2 New | Kling AI | ❌ | ❌ |
+| Kling V2.1 | Kling AI | ❌ | ✅ |
+
+**Video Generation:**
+| Model | Provider | Text-to-Video | Image-to-Video | Frame-to-Frame |
+|-------|----------|:-------------:|:--------------:|:--------------:|
+| Veo 3.1 | Google | ✅ | ✅ | ✅ |
+| Kling V1 | Kling AI | ✅ | ✅ | ❌ |
+| Kling V1.5 | Kling AI | ✅ | ✅ | ❌ |
+| Kling V1.6 | Kling AI | ✅ | ✅ | ✅ |
+| Kling V2 Master | Kling AI | ✅ | ✅ | ❌ |
+| Kling V2.1 | Kling AI | ✅ | ✅ | ❌ |
+| Kling V2.1 Master | Kling AI | ✅ | ✅ | ❌ |
+| Kling V2.5 Turbo | Kling AI | ✅ | ✅ | ❌ |
+| Hailuo 2.3 | MiniMax | ✅ | ✅ | ✅ |
+| Hailuo 2.3 Fast | MiniMax | ❌ | ✅ | ❌ |
+| Hailuo 02 | MiniMax | ✅ | ✅ | ✅ |
+| Hailuo O2 | MiniMax | ✅ | ✅ | ❌ |
+| Kling V2.6 Motion | Fal.ai | ❌ | ✅ | Motion Control |
+
+**Chat:**
+- **Gemini 2.0 Flash** - Chat conversations
+
+## 🛠️ Development
+
+### Code Style
+
+See `code-style-guide.md` for detailed guidelines:
+
+- **File Size Limits**: Components 300 lines, Utils 200 lines
+- **TypeScript**: Strict typing, avoid `any`
+- **Comments**: JSDoc for functions, section headers for organization
+
+### Adding New Features
+
+1. Add UI components in `src/components/`
+2. Create custom hooks in `src/hooks/`
+3. Add API routes in `server/index.js`
+4. Update types in `src/types.ts`
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Follow the code style guide
+4. Commit your changes (`git commit -m 'Add amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the Apache License 2.0.
+
+### Commercial Usage
+If you are using this project for commercial purposes or building a commercial product, please refer to the [NOTICE](file:///d:/AI_Agent_Practice/TwitCanva/NOTICE) file for notification requirements.
+
+
+## 🙏 Acknowledgments
+
+- OpenAI for GPT Image generation
+- Google Gemini API for AI generation
+- Kling AI for video generation
+- MiniMax for Hailuo AI video generation
+- Fal.ai for Kling V2.6 Motion Control API
+- LangGraph for agent framework
+- React team for the amazing framework
+- Vite team for the blazing-fast build tool
+
+---
+
+**Built with ❤️ using React, TypeScript, and AI APIs from OpenAI, Google, Kling, MiniMax, and Fal.ai (2025)**
+

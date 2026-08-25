@@ -1,0 +1,150 @@
+{
+  "id": "minimax_h3_t2v",
+  "name": "MiniMax H3文生视频",
+  "description": "使用MiniMax H3模型生成视频，支持文本到视频和图生视频",
+  "category": "video",
+  "nodes": {
+    "1": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "first_frame.png"
+      },
+      "_meta": { "title": "加载首帧图片(可选)" }
+    },
+    "2": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "a beautiful scene with smooth motion, high quality",
+        "clip": ["3", 1]
+      },
+      "_meta": { "title": "视频描述提示词" }
+    },
+    "3": {
+      "class_type": "CheckpointLoaderSimple",
+      "inputs": {
+        "ckpt_name": "minimax_h3.safetensors"
+      },
+      "_meta": { "title": "加载MiniMax H3模型" }
+    },
+    "4": {
+      "class_type": "EmptyLatentVideo",
+      "inputs": {
+        "width": 1280,
+        "height": 720,
+        "length": 81,
+        "batch_size": 1
+      },
+      "_meta": { "title": "创建空白视频潜空间" }
+    },
+    "5": {
+      "class_type": "KSampler",
+      "inputs": {
+        "model": ["3", 0],
+        "positive": ["2", 0],
+        "negative": ["6", 0],
+        "latent_image": ["4", 0],
+        "seed": 12345,
+        "steps": 30,
+        "cfg": 7.0,
+        "sampler_name": "euler",
+        "scheduler": "normal",
+        "denoise": 1.0
+      },
+      "_meta": { "title": "采样器" }
+    },
+    "6": {
+      "class_type": "CLIPTextEncode",
+      "inputs": {
+        "text": "low quality, blurry, distorted, jittery",
+        "clip": ["3", 1]
+      },
+      "_meta": { "title": "负向提示词" }
+    },
+    "7": {
+      "class_type": "VAEDecode",
+      "inputs": {
+        "samples": ["5", 0],
+        "vae": ["3", 2]
+      },
+      "_meta": { "title": "VAE解码" }
+    },
+    "8": {
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+        "images": ["7", 0],
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "minimax_h3",
+        "format": "video/h264-mp4",
+        "pingpong": false,
+        "save_output": true
+      },
+      "_meta": { "title": "合成视频" }
+    }
+  },
+  "parameters": [
+    {
+      "id": "first_frame",
+      "nodeId": "1",
+      "field": "image",
+      "type": "image",
+      "label": "首帧图片(可选，用于图生视频)"
+    },
+    {
+      "id": "prompt",
+      "nodeId": "2",
+      "field": "text",
+      "type": "text",
+      "label": "视频描述提示词",
+      "default": "a beautiful scene with smooth motion, high quality"
+    },
+    {
+      "id": "width",
+      "nodeId": "4",
+      "field": "width",
+      "type": "number",
+      "label": "宽度",
+      "default": 1280
+    },
+    {
+      "id": "height",
+      "nodeId": "4",
+      "field": "height",
+      "type": "number",
+      "label": "高度",
+      "default": 720
+    },
+    {
+      "id": "length",
+      "nodeId": "4",
+      "field": "length",
+      "type": "number",
+      "label": "帧数",
+      "default": 81
+    },
+    {
+      "id": "steps",
+      "nodeId": "5",
+      "field": "steps",
+      "type": "number",
+      "label": "采样步数",
+      "default": 30
+    },
+    {
+      "id": "frame_rate",
+      "nodeId": "8",
+      "field": "frame_rate",
+      "type": "number",
+      "label": "帧率",
+      "default": 24
+    }
+  ],
+  "outputs": [
+    {
+      "nodeId": "8",
+      "field": "Filenames",
+      "type": "video",
+      "label": "生成视频"
+    }
+  ]
+}
